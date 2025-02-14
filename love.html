@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>จดหมายวาเลนไทน์</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('https://source.unsplash.com/phone-love') no-repeat center center/cover;
+            position: relative;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 182, 193, 0.6);
+        }
+        .letter-wrapper {
+            position: relative;
+            width: 90vw;
+            max-width: 350px;
+            height: 200px;
+            cursor: pointer;
+            animation: floatLetter 3s infinite ease-in-out;
+        }
+        @keyframes floatLetter {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        .envelope {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #ff758c;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            font-family: 'Pacifico', cursive;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+        }
+        .letter {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 80vw;
+            max-width: 320px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            opacity: 0;
+        }
+        .letter-opened .envelope {
+            transform: rotateX(90deg);
+            opacity: 0;
+        }
+        .letter-opened .letter {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        .btn-close-letter {
+            margin-top: 10px;
+            background: #ff527b;
+            border: none;
+            padding: 10px 15px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-close-letter:hover {
+            background: #ff345b;
+        }
+        .volume-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .volume-slider {
+            width: 100px;
+        }
+    </style>
+    <script>
+        function openLetter() {
+            document.getElementById('letterWrapper').classList.add('letter-opened');
+            document.getElementById('bg-music').play();
+        }
+        function closeLetter() {
+            document.getElementById('letterWrapper').classList.remove('letter-opened');
+            downloadFlower();
+        }
+        function changeVolume(value) {
+            let audio = document.getElementById('bg-music');
+            audio.volume = value;
+        }
+        function downloadFlower() {
+            let link = document.createElement('a');
+            link.href = 'https://drive.google.com/file/d/14S5kF2BxtHl5Tp1nm6R8PPG3jv3_ggTB/view?usp=sharing'; // เปลี่ยนลิงก์ที่นี่
+            link.download = 'my-flower.png'; // ตั้งชื่อไฟล์ที่ดาวน์โหลด
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div id="letterWrapper" class="letter-wrapper" onclick="openLetter()">
+        <div class="envelope">💌 คลิกเพื่อเปิดจดหมาย 💌</div>
+        <div class="letter">
+            <h2>💌ถึงคนอ่าน</h2>
+            <p> สวัสดี! เราทำเว็บนี้เองเลยนะ เท่ไหม? 😆
+                วันนี้เป็นยังไงบ้าง เหนื่อยรึเปล่า? ได้ดอกกุหลาบเยอะไหมน้า? 🌹
+                
+                ถึงเราจะเพิ่งเจอกัน แต่รู้สึกว่าแกเป็นคนพิเศษมาก คุยด้วยแล้วสบายใจ แถมยังสนุกสุดๆ นานๆ ทีจะได้คุยกับใครแล้วรู้สึกดีแบบนี้ 
+                
+                วันวาเลนไทน์นี้ ขอให้แกมีความสุขมากๆ ยิ้มเยอะๆ นะ 💕✨
+            </p>
+            <button onclick="closeLetter()" class="btn-close-letter">รับดอกไม้</button>
+        </div>
+    </div>
+    <div class="volume-controls">
+        <span>🔉</span>
+        <input type="range" class="volume-slider" min="0" max="1" step="0.1" onchange="changeVolume(this.value)">
+        <span>🔊</span>
+    </div>
+    <audio id="bg-music" loop>
+        <source src="lovesong.mp3.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+</body>
+</html>
